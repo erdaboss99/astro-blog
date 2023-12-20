@@ -1,0 +1,30 @@
+---
+import RootLayout from '../layouts/RootLayout.astro';
+---
+
+<RootLayout title='Not Found'>
+	<div
+		class='mt-14 flex flex-col items-center justify-center space-y-6 text-center md:mt-24 md:flex-row md:space-x-6 md:text-left'>
+		<h1
+			class='border-b-2 border-300 py-5 text-6xl font-extrabold leading-9 tracking-tight md:border-b-0 md:border-r-2 md:px-6 md:text-8xl md:leading-14'>
+			404
+		</h1>
+		<div>
+			<div class='max-w-md text-center md:flex md:flex-col md:text-left'>
+				<p
+					class='mb-4 text-xl font-bold leading-normal text-900 dark:text-100 md:text-2xl'>
+					Unfortunately, this page does not exist.
+				</p>
+				<p class='font-regular mb-8'>
+					Rest assured, there are numerous alternative offerings
+					available on our homepage for your consideration.
+				</p>
+			</div>
+			<a
+				href='/'
+				class='transition-color rounded-lg bg-700 px-4 py-2 text-sm font-medium leading-5 text-0 duration-300 hover:bg-1000 dark:bg-200 dark:text-1000 dark:hover:bg-0'>
+				Back to homepage
+			</a>
+		</div>
+	</div>
+</RootLayout>
