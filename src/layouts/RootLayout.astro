@@ -4,13 +4,13 @@ import RootContainer from '../components/RootContainer.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-import { SITE_META } from '../lib/constants';
+import { SITE_DATA } from '../lib/constants';
 
 const { title, description } = Astro.props;
 ---
 
 <html
-	lang={SITE_META.language}
+	lang={SITE_DATA.language}
 	class='scroll-smooth'>
 	<RootHead
 		title={title}

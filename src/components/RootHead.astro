@@ -1,7 +1,7 @@
 ---
 import { ViewTransitions } from 'astro:transitions';
 
-import { SITE_META } from '../lib/constants';
+import { SITE_DATA } from '../lib/constants';
 import '../styles/global.css';
 
 interface Props {
@@ -18,7 +18,7 @@ const { title, description } = Astro.props;
 	<!-- Global Metadata -->
 	<meta
 		charset='UTF-8'
-		lang={SITE_META.language}
+		lang={SITE_DATA.language}
 	/>
 	<link
 		rel='icon'
