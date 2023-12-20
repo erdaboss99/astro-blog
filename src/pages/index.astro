@@ -1,16 +1,8 @@
 ---
-
+import RootLayout from '../layouts/RootLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<RootLayout>
+	<h1 class='cursor-default select-none text-8xl font-bold'>Hello World!</h1>
+	<p class='mt-4 text-lg italic'>This is a sample page.</p>
+</RootLayout>
