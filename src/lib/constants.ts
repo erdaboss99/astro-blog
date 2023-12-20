@@ -5,6 +5,10 @@ export const SITE_DATA = {
 	language: 'en',
 	siteUrl: 'https://blog.erdelyiroland.com',
 	siteOwner: 'Erdélyi Roland',
+	email: 'mail@erdelyiroland.com',
+	github: 'https://github.com/erdaboss99',
+	linkedin: 'https://www.linkedin.com/in/roland-erdélyi-aa6256250/',
+	twitter: 'https://twitter.com/erdaboss',
 };
 
 export const NAVIGATION = [

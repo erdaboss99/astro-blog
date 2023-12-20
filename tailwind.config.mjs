@@ -13,6 +13,13 @@ export default {
 		colors: {
 			0: '#ffffff',
 			100: colors.gray[100],
+			200: colors.gray[200],
+			300: colors.gray[300],
+			400: colors.gray[400],
+			500: colors.gray[500],
+			600: colors.gray[600],
+			700: colors.gray[700],
+			800: colors.gray[800],
 			900: colors.gray[900],
 			950: colors.gray[950],
 			1000: '#000000',
