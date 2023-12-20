@@ -1,1 +1,45 @@
-<footer>Footer</footer>
+---
+import { SITE_DATA } from '../lib/constants';
+
+import { Mail, Github, Linkedin, Twitter } from 'lucide-react';
+---
+
+<footer class='mt-16 flex flex-col items-center'>
+	<div class='mb-3 flex space-x-6'>
+		<a
+			class='text-base text-500 transition hover:text-900 dark:text-400
+            dark:hover:text-100'
+			href={`mailto:${SITE_DATA.email}`}>
+			<Mail />
+		</a>
+		<a
+			class='text-base text-500 transition hover:text-900 dark:text-400
+            dark:hover:text-100'
+			href={SITE_DATA.github}
+			target='_blank'>
+			<Github />
+		</a>
+		<a
+			class='text-base text-500 transition hover:text-900 dark:text-400
+            dark:hover:text-100'
+			href={SITE_DATA.twitter}
+			target='_blank'>
+			<Twitter />
+		</a>
+		<a
+			class='text-base text-500 transition hover:text-900 dark:text-400
+            dark:hover:text-100'
+			href={SITE_DATA.linkedin}
+			target='_blank'>
+			<Linkedin />
+		</a>
+	</div>
+	<small class='mb-2 flex space-x-2 text-base text-400 dark:text-400'>
+		<span>©</span>
+		<span>{new Date().getFullYear()}</span>
+		<span>•</span>
+		<span>{SITE_DATA.siteOwner}</span>
+		<span>•</span>
+		<span>All rights reserved.</span>
+	</small>
+</footer>
