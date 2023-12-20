@@ -1,3 +1,41 @@
-<header>
-	<nav>Header</nav>
+---
+import Logo from './Logo.astro';
+import HeaderLink from './HeaderLink.astro';
+
+import { NAVIGATION, SITE_DATA } from '../lib/constants';
+---
+
+<header class='mt-2'>
+	<nav class='flex h-[2.5rem] items-center justify-between py-12'>
+		<a href='/'>
+			<div class='flex items-center justify-between'>
+				<Logo
+					width='100'
+					height='70'
+					viewBox='0 0 100 72'
+					class='mr-10 fill-1000 dark:fill-0'
+				/>
+				{
+					typeof SITE_DATA.headerTitle === 'string' ? (
+						<div class='hidden h-full text-3xl font-semibold sm:block'>
+							{SITE_DATA.headerTitle}
+						</div>
+					) : (
+						SITE_DATA.headerTitle
+					)
+				}
+			</div>
+		</a>
+		<div class='flex items-center space-x-4 leading-5 sm:space-x-6'>
+			{
+				NAVIGATION.filter((link) => link.href !== '/').map((link) => (
+					<HeaderLink
+						href={link.href}
+						class='hidden font-medium text-900 dark:text-100 sm:block'>
+						{link.title}
+					</HeaderLink>
+				))
+			}
+		</div>
+	</nav>
 </header>
