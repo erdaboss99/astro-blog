@@ -16,3 +16,5 @@ export const NAVIGATION = [
 	{ href: '/posts', title: 'Posts' },
 	{ href: 'https://erdelyiroland.com', title: 'Portfolio' },
 ];
+
+export const ITEMS_PER_PAGE = 5;
