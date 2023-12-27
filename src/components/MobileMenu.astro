@@ -1,0 +1,65 @@
+---
+import HeaderLink from './HeaderLink.astro';
+
+import { Menu, X } from 'lucide-react';
+
+import { NAVIGATION } from '../lib/constants';
+---
+
+<button
+	aria-label='Toggle Menu'
+	class='toggle-mobile-menu md:hidden'>
+	<Menu
+		size={35}
+		className='text-900 dark:text-100'
+	/>
+</button>
+<div
+	id='mobileMenuContainer'
+	class='fixed left-0 top-0 z-10 h-full w-full translate-x-full transform bg-0 opacity-95 duration-500 ease-in-out dark:bg-950 dark:opacity-[0.98]'>
+	<div class='flex justify-end'>
+		<button
+			class='toggle-mobile-menu mr-8 mt-11 h-8 w-8'
+			aria-label='Toggle Menu'>
+			<X
+				size={35}
+				className='text-900 dark:text-100'
+			/>
+		</button>
+	</div>
+	<nav class='fixed mt-8 h-full'>
+		{
+			NAVIGATION.map(({ href, title }) => (
+				<div class='px-12 py-4'>
+					<HeaderLink
+						href={href}
+						class='text-2xl font-semibold tracking-widest text-900 dark:text-100'>
+						{title}
+					</HeaderLink>
+				</div>
+			))
+		}
+	</nav>
+</div>
+
+<script>
+	function addListener() {
+		document.querySelectorAll('.toggle-mobile-menu').forEach((button) => {
+			button.addEventListener('click', () => onMenuToggle());
+		});
+	}
+
+	function onMenuToggle() {
+		const isMenuVisible = document.body.style.overflow === '';
+		document
+			.getElementById('mobileMenuContainer')!
+			.classList.toggle('translate-x-full', !isMenuVisible);
+		document
+			.getElementById('mobileMenuContainer')!
+			.classList.toggle('translate-x-0', isMenuVisible);
+		document.body.style.overflow = isMenuVisible ? 'hidden' : '';
+	}
+
+	addListener();
+	document.addEventListener('astro:after-swap', () => addListener());
+</script>

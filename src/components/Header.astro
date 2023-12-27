@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import HeaderLink from './HeaderLink.astro';
+import MobileMenu from './MobileMenu.astro';
 
 import { NAVIGATION, SITE_DATA } from '../lib/constants';
 ---
@@ -17,7 +18,7 @@ import { NAVIGATION, SITE_DATA } from '../lib/constants';
 				/>
 				{
 					typeof SITE_DATA.headerTitle === 'string' ? (
-						<div class='hidden h-full text-3xl font-semibold sm:block'>
+						<div class='hidden h-full text-3xl font-semibold md:block'>
 							{SITE_DATA.headerTitle}
 						</div>
 					) : (
@@ -26,16 +27,18 @@ import { NAVIGATION, SITE_DATA } from '../lib/constants';
 				}
 			</div>
 		</a>
-		<div class='flex items-center space-x-4 leading-5 sm:space-x-6'>
+		<div class='flex items-center space-x-4 leading-5 md:space-x-6'>
 			{
 				NAVIGATION.filter((link) => link.href !== '/').map((link) => (
 					<HeaderLink
 						href={link.href}
-						class='hidden font-medium sm:block'>
+						class='hidden font-medium md:block'>
 						{link.title}
 					</HeaderLink>
 				))
 			}
+
+			<MobileMenu />
 		</div>
 	</nav>
 </header>
