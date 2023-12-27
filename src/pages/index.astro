@@ -1,19 +1,90 @@
 ---
+import { getCollection } from 'astro:content';
+
 import RootLayout from '../layouts/RootLayout.astro';
 
-import { SITE_DATA } from '../lib/constants';
+import Date from '../components/Date.astro';
+import PostTag from '../components/PostTag.astro';
+
+import { SITE_DATA, ITEMS_PER_PAGE } from '../lib/constants';
+import { excludeDrafts, sortPosts } from '../lib/utils';
+
+const posts = await getCollection('posts', excludeDrafts).then(sortPosts);
 ---
 
 <RootLayout
 	title={SITE_DATA.title}
 	description={SITE_DATA.description}>
-	<div class='space-y-2 pb-8 pt-6 md:space-y-5'>
-		<h1
-			class='text-3xl font-bold leading-9 tracking-tight text-900 dark:text-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14'>
-			Latest posts
-		</h1>
-		<p class='text-lg leading-7 text-500 dark:text-400'>
-			{SITE_DATA.description}
-		</p>
+	<div class='divide-y divide-200 dark:divide-700'>
+		<div class='space-y-2 pb-8 pt-6 md:space-y-5'>
+			<h1
+				class='text-3xl font-bold leading-9 tracking-tight text-900 dark:text-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14'>
+				Latest posts
+			</h1>
+			<p class='text-lg leading-7 text-500 dark:text-400'>
+				{SITE_DATA.description}
+			</p>
+		</div>
+		<ul class='divide-y divide-200 dark:divide-700'>
+			{!posts.length && 'No posts found.'}
+			{
+				posts.slice(0, ITEMS_PER_PAGE).map((post) => {
+					const { date, title, summary, tags } = post.data;
+					return (
+						<li class='py-12'>
+							<article>
+								<div class='space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0'>
+									<dl>
+										<dt class='sr-only'>Published on</dt>
+										<dd class='text-base font-medium leading-6 text-500 dark:text-400'>
+											<Date date={date} />
+										</dd>
+									</dl>
+									<div class='space-y-5 xl:col-span-3'>
+										<div class='space-y-6'>
+											<div>
+												<h2 class='text-2xl font-bold leading-8 tracking-tight'>
+													<a
+														href={`/posts/${post.slug}`}
+														class='text-900 dark:text-100'>
+														{title}
+													</a>
+												</h2>
+												<div class='flex flex-wrap'>
+													{tags.map(({ slug }) => (
+														<PostTag slug={slug} />
+													))}
+												</div>
+											</div>
+											<div class='prose max-w-none text-500 dark:text-400'>{summary}</div>
+										</div>
+										<div class='text-base font-medium leading-6'>
+											<a
+												href={`/posts/${post.slug}`}
+												class='text-accent-500 hover:text-accent-600 dark:hover:text-accent-400'
+												aria-label={`Read "${title}"`}>
+												Read more &rarr;
+											</a>
+										</div>
+									</div>
+								</div>
+							</article>
+						</li>
+					);
+				})
+			}
+		</ul>
 	</div>
+	{
+		posts.length > ITEMS_PER_PAGE && (
+			<div class='flex justify-end text-base font-medium leading-6'>
+				<a
+					href='/posts'
+					class='text-accent-500 hover:text-accent-600 dark:hover:text-accent-400'
+					aria-label='All posts'>
+					All Posts &rarr;
+				</a>
+			</div>
+		)
+	}
 </RootLayout>
