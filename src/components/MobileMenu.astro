@@ -1,7 +1,7 @@
 ---
-import HeaderLink from './HeaderLink.astro';
-
 import { Menu, X } from 'lucide-react';
+
+import HeaderLink from './HeaderLink.astro';
 
 import { NAVIGATION } from '../lib/constants';
 ---
@@ -51,12 +51,8 @@ import { NAVIGATION } from '../lib/constants';
 
 	function onMenuToggle() {
 		const isMenuVisible = document.body.style.overflow === '';
-		document
-			.getElementById('mobileMenuContainer')!
-			.classList.toggle('translate-x-full', !isMenuVisible);
-		document
-			.getElementById('mobileMenuContainer')!
-			.classList.toggle('translate-x-0', isMenuVisible);
+		document.getElementById('mobileMenuContainer')!.classList.toggle('translate-x-full', !isMenuVisible);
+		document.getElementById('mobileMenuContainer')!.classList.toggle('translate-x-0', isMenuVisible);
 		document.body.style.overflow = isMenuVisible ? 'hidden' : '';
 	}
 
