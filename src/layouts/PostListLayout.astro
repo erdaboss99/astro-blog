@@ -1,0 +1,125 @@
+---
+import type { Page } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+import RootLayout from './RootLayout.astro';
+
+import Date from '../components/Date.astro';
+import Pagination from '../components/Pagination.astro';
+import PostTag from '../components/PostTag.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	page: Page<CollectionEntry<'posts'>>;
+}
+
+const tags = await getCollection('tags');
+const posts = await getCollection('posts');
+
+function tagCount(slug: CollectionEntry<'tags'>['slug']) {
+	return posts.filter((post) => post.data.tags.some((tag) => tag.slug === slug)).length;
+}
+
+function isSamePath(path: string) {
+	return Astro.url.pathname === path;
+}
+
+const { title, description, page } = Astro.props;
+const hasDefaultSlot = Astro.slots.has('default');
+const isPostPage = Astro.url.pathname.startsWith('/posts');
+---
+
+<RootLayout
+	{title}
+	{description}>
+	<div>
+		<div class='pb-6 pt-6'>
+			<h1
+				class='text-3xl font-extrabold leading-9 tracking-tight text-900 dark:text-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14'>
+				{title}
+			</h1>
+			{
+				hasDefaultSlot && (
+					<div class='prose dark:prose-invert py-4'>
+						<slot />
+					</div>
+				)
+			}
+		</div>
+	</div>
+	<div class='flex sm:space-x-24'>
+		<div
+			class='hidden max-h-screen h-full sm:flex flex-wrap bg-50 dark:bg-900/70 shadow-md pt-5 dark:shadow-800/40 rounded min-w-[280px] max-w-[280px] overflow-auto'>
+			<div class='py-4 px-6'>
+				{
+					isPostPage ? (
+						<h3 class='text-accent-500 font-bold uppercase'>All Posts</h3>
+					) : (
+						<a
+							href='/posts'
+							class='font-bold uppercase text-700 dark:text-300 hover:text-accent-500 dark:hover:text-accent-500'>
+							All Posts
+						</a>
+					)
+				}
+				<ul>
+					{
+						tags.map(({ slug, data }) => (
+							<li class='my-3'>
+								{isSamePath(`/tag/${slug}`) ? (
+									<h3 class='inline py-2 px-3 uppercase text-sm font-bold text-accent-500'>
+										{`${data.name} (${tagCount(slug)})`}
+									</h3>
+								) : (
+									<a
+										href={`/tags/${slug}`}
+										class='py-2 px-3 uppercase text-sm font-medium text-500 dark:text-300 hover:text-accent-500 dark:hover:text-accent-500'
+										aria-label={`View posts tagged ${data.name}`}>
+										{`${data.name} (${tagCount(slug)})`}
+									</a>
+								)}
+							</li>
+						))
+					}
+				</ul>
+			</div>
+		</div>
+		<div>
+			<ul>
+				{
+					page.data.map(({ slug, data: { date, title, summary, tags } }: CollectionEntry<'posts'>) => (
+						<li class='py-5'>
+							<article class='space-y-2 flex flex-col xl:space-y-0'>
+								<dl>
+									<dt class='sr-only'>Published on</dt>
+									<dd class='text-base font-medium leading-6 text-500 dark:text-400'>
+										<Date date={date} />
+									</dd>
+								</dl>
+								<div class='space-y-3'>
+									<div>
+										<h3 class='text-2xl font-bold leading-8 tracking-tight'>
+											<a
+												href={`/posts/${slug}`}
+												class='text-900 dark:text-100'>
+												{title}
+											</a>
+										</h3>
+										<div class='flex flex-wrap'>
+											{tags.map(({ slug }) => (
+												<PostTag slug={slug} />
+											))}
+										</div>
+									</div>
+									<div class='prose max-w-none text-500 dark:text-400'>{summary}</div>
+								</div>
+							</article>
+						</li>
+					))
+				}
+			</ul>
+			{(page.url.next || page.url.prev) && <Pagination page={page} />}
+		</div>
+	</div>
+</RootLayout>
