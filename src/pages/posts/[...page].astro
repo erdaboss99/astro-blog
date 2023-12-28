@@ -1,0 +1,26 @@
+---
+import type { Page } from 'astro';
+import { getCollection } from 'astro:content';
+
+import PostListLayout from '../../layouts/PostListLayout.astro';
+
+import { ITEMS_PER_PAGE } from '../../lib/constants';
+import { excludeDrafts, sortPosts } from '../../lib/utils';
+
+interface Props {
+	page: Page;
+}
+
+export async function getStaticPaths({ paginate }: any) {
+	const posts = await getCollection('posts', excludeDrafts).then(sortPosts);
+	return paginate(posts, { pageSize: ITEMS_PER_PAGE });
+}
+
+const { page } = Astro.props;
+---
+
+<PostListLayout
+	title='All posts'
+	description='All existing posts'
+	page={page}
+/>

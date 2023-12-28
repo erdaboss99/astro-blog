@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+
+import PostDisplayLayout from '../../layouts/PostDisplayLayout.astro';
+
+import { excludeDrafts } from '../../lib/utils';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('posts', excludeDrafts);
+	return posts.map((post, index) => ({
+		params: { slug: post.slug },
+		props: { post, next: posts[index + 1], prev: posts[index - 1] },
+	}));
+}
+---
+
+<PostDisplayLayout {...Astro.props} />
