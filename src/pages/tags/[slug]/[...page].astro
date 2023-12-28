@@ -1,0 +1,34 @@
+---
+import { type Page } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+import PostListLayout from '../../../layouts/PostListLayout.astro';
+
+import { ITEMS_PER_PAGE } from '../../../lib/constants';
+import { excludeDrafts, sortPosts } from '../../../lib/utils';
+
+interface Props {
+	page: Page<CollectionEntry<'posts'>>;
+	entry: CollectionEntry<'tags'>;
+}
+
+export async function getStaticPaths({ paginate }: any) {
+	const tags = await getCollection('tags');
+	const posts = await getCollection('posts', excludeDrafts).then(sortPosts);
+
+	return tags.flatMap((entry) => {
+		const tagPosts = posts.filter((post) => post.data.tags.some(({ slug }) => slug === entry.slug));
+		return paginate(tagPosts, { pageSize: ITEMS_PER_PAGE, params: { slug: entry.slug }, props: { entry } });
+	});
+}
+
+const { page, entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<PostListLayout
+	title={entry.data.name}
+	description={entry.data.description}
+	page={page}>
+	<Content />
+</PostListLayout>
