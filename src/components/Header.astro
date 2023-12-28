@@ -1,9 +1,9 @@
 ---
-import Logo from './Logo.astro';
 import HeaderLink from './HeaderLink.astro';
+import Logo from './Logo.astro';
 import MobileMenu from './MobileMenu.astro';
 
-import { NAVIGATION, SITE_DATA } from '../lib/constants';
+import { NAVIGATION } from '../lib/constants';
 ---
 
 <header class='mt-2'>
@@ -16,15 +16,6 @@ import { NAVIGATION, SITE_DATA } from '../lib/constants';
 					viewBox='0 0 100 72'
 					class='mr-10 fill-1000 dark:fill-0'
 				/>
-				{
-					typeof SITE_DATA.headerTitle === 'string' ? (
-						<div class='hidden h-full text-3xl font-semibold md:block'>
-							{SITE_DATA.headerTitle}
-						</div>
-					) : (
-						SITE_DATA.headerTitle
-					)
-				}
 			</div>
 		</a>
 		<div class='flex items-center space-x-4 leading-5 md:space-x-6'>

@@ -1,8 +1,8 @@
 ---
-import RootHead from '../components/RootHead.astro';
-import RootContainer from '../components/RootContainer.astro';
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import RootContainer from '../components/RootContainer.astro';
+import RootHead from '../components/RootHead.astro';
 
 import { SITE_DATA } from '../lib/constants';
 
@@ -18,11 +18,15 @@ const { title, description } = Astro.props;
 	/>
 	<body class='cursor-default select-none bg-0 text-1000 antialiased dark:bg-950 dark:text-0'>
 		<RootContainer>
-			<Header />
-			<main class='mb-auto'>
-				<slot />
-			</main>
-			<Footer />
+			<div class='flex h-screen flex-col justify-between font-base'>
+				<Header />
+				<main
+					class='mb-auto'
+					transition:animate='fade'>
+					<slot />
+				</main>
+				<Footer />
+			</div>
 		</RootContainer>
 	</body>
 </html>

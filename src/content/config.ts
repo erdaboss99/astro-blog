@@ -5,7 +5,6 @@ const authors = defineCollection({
 	schema: z.object({
 		name: z.string(),
 		avatar: z.string(),
-		email: z.string().email(),
 		github: z.string().url(),
 	}),
 });
@@ -17,9 +16,8 @@ const posts = defineCollection({
 		date: z.coerce.date(),
 		tags: z.array(reference('tags')).default(['default']),
 		draft: z.boolean().default(false),
-		summary: z.string().optional(),
-		images: z.string().optional(),
-		authors: z.array(reference('authors')).default(['erdelyi-roland']),
+		summary: z.string(),
+		author: reference('authors').default('erdelyi-roland'),
 		related: z.array(reference('posts')).default([]),
 	}),
 });
@@ -28,7 +26,7 @@ const tags = defineCollection({
 	type: 'content',
 	schema: z.object({
 		name: z.string(),
-		description: z.string().optional(),
+		description: z.string(),
 	}),
 });
 

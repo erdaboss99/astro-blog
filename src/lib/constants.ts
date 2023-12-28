@@ -1,6 +1,5 @@
 export const SITE_DATA = {
 	title: 'Blog | Erdélyi Roland',
-	headerTitle: 'Blog',
 	description: "Erdélyi Roland's Personal Blog",
 	language: 'en',
 	siteUrl: 'https://blog.erdelyiroland.com',
@@ -14,7 +13,8 @@ export const SITE_DATA = {
 export const NAVIGATION = [
 	{ href: '/', title: 'Home' },
 	{ href: '/posts', title: 'Posts' },
-	{ href: 'https://erdelyiroland.com', title: 'Portfolio' },
+	{ href: '/tags', title: 'Tags' },
+	{ href: 'https://erdelyiroland.com', title: 'About' },
 ];
 
 export const ITEMS_PER_PAGE = 5;
