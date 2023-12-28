@@ -1,5 +1,5 @@
 export const SITE_DATA = {
-	title: 'Blog | Erdélyi Roland',
+	title: 'Home',
 	description: "Erdélyi Roland's Personal Blog",
 	language: 'en',
 	siteUrl: 'https://blog.erdelyiroland.com',
