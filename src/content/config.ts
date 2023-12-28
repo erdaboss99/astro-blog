@@ -2,16 +2,17 @@ import { defineCollection, reference, z } from 'astro:content';
 
 const authors = defineCollection({
 	type: 'content',
-	schema: z.object({
-		name: z.string(),
-		avatar: z.string(),
-		occupation: z.string(),
-		website: z.string().url(),
-		email: z.string().email(),
-		github: z.string().url(),
-		linkedin: z.string().url(),
-		twitter: z.string().url(),
-	}),
+	schema: ({ image }) =>
+		z.object({
+			name: z.string(),
+			avatar: image().refine((img) => img.src !== ''),
+			occupation: z.string(),
+			website: z.string().url(),
+			email: z.string().email(),
+			github: z.string().url(),
+			linkedin: z.string().url(),
+			twitter: z.string().url(),
+		}),
 });
 
 const posts = defineCollection({
