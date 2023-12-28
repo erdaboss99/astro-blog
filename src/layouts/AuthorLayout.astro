@@ -1,0 +1,77 @@
+---
+import { Image } from 'astro:assets';
+import { type CollectionEntry } from 'astro:content';
+
+import RootLayout from './RootLayout.astro';
+
+import { Github, Globe, Linkedin, Mail, Twitter } from 'lucide-react';
+
+interface Props {
+	author: CollectionEntry<'authors'>;
+}
+
+const { name, avatar, occupation, website, email, github, linkedin, twitter } = Astro.props.author.data;
+---
+
+<RootLayout title={name}>
+	<div class='divide-y divide-200 dark:divide-700'>
+		<div class='space-y-2 pb-8 pt-6 md:space-y-5'>
+			<h1
+				class='text-3xl font-extrabold leading-9 tracking-tight text-900 dark:text-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14'>
+				About
+			</h1>
+		</div>
+		<div class='items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0'>
+			<div class='flex flex-col items-center space-x-2 pt-8'>
+				{
+					avatar && (
+						<Image
+							src={avatar}
+							alt='avatar'
+							width={192}
+							height={192}
+							class='h-48 w-48 rounded-full'
+						/>
+					)
+				}
+				<h3 class='pb-2 pt-4 text-2xl font-bold leading-8 tracking-tight'>{name}</h3>
+				<div class='text-500 dark:text-400'>{occupation}</div>
+				<div class='flex space-x-3 pt-6'>
+					<a
+						class='text-base text-500 transition hover:text-accent-600 dark:hover:text-accent-400 dark:text-400'
+						href={website}
+						target='_blank'>
+						<Globe />
+					</a>
+					<a
+						class='text-base text-500 transition hover:text-accent-600 dark:hover:text-accent-400 dark:text-400'
+						href={`mailto:${email}`}
+						target='_blank'>
+						<Mail />
+					</a>
+					<a
+						class='text-base text-500 transition hover:text-accent-600 dark:hover:text-accent-400 dark:text-400'
+						href={github}
+						target='_blank'>
+						<Github />
+					</a>
+					<a
+						class='text-base text-500 transition hover:text-accent-600 dark:hover:text-accent-400 dark:text-400'
+						href={linkedin}
+						target='_blank'>
+						<Linkedin />
+					</a>
+					<a
+						class='text-base text-500 transition hover:text-accent-600 dark:hover:text-accent-400 dark:text-400'
+						href={twitter}
+						target='_blank'>
+						<Twitter />
+					</a>
+				</div>
+			</div>
+			<div class='prose max-w-none pb-8 pt-8 dark:prose-invert xl:col-span-2'>
+				<slot />
+			</div>
+		</div>
+	</div>
+</RootLayout>
