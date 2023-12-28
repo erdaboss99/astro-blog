@@ -14,7 +14,7 @@ import { NAVIGATION } from '../lib/constants';
 					width='100'
 					height='70'
 					viewBox='0 0 100 72'
-					class='mr-10 fill-1000 dark:fill-0'
+					class='mr-10 fill-1000 dark:fill-0 hover:fill-accent-600 dark:hover:fill-accent-400'
 				/>
 			</div>
 		</a>
@@ -23,7 +23,7 @@ import { NAVIGATION } from '../lib/constants';
 				NAVIGATION.filter((link) => link.href !== '/').map((link) => (
 					<HeaderLink
 						href={link.href}
-						class='hidden font-medium md:block'>
+						class='hidden font-medium md:block hover:text-accent-600 dark:hover:text-accent-400'>
 						{link.title}
 					</HeaderLink>
 				))

@@ -14,7 +14,7 @@ const isActive = href === pathname || href === pathname.replace(/\/$/, '');
 <a
 	href={href}
 	target={href.startsWith('http') ? '_blank' : undefined}
-	class:list={[className, { active: isActive }]}
+	class:list={[className, { 'text-accent-500': isActive }]}
 	{...props}>
 	<slot />
 </a>
