@@ -9,7 +9,8 @@ const tags = await getCollection('tags');
 const posts = await getCollection('posts');
 
 function tagCount(slug: CollectionEntry<'tags'>['slug']) {
-	return posts.filter((post) => post.data.tags.some((tag) => tag.slug === slug)).length;
+	return posts.filter((post) => !post.data.draft).filter((post) => post.data.tags.some((tag) => tag.slug === slug))
+		.length;
 }
 ---
 

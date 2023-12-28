@@ -8,6 +8,8 @@ import Date from '../components/Date.astro';
 import Pagination from '../components/Pagination.astro';
 import PostTag from '../components/PostTag.astro';
 
+import { excludeDrafts } from '../lib/utils';
+
 interface Props {
 	title: string;
 	description: string;
@@ -15,10 +17,11 @@ interface Props {
 }
 
 const tags = await getCollection('tags');
-const posts = await getCollection('posts');
+const posts = await getCollection('posts', excludeDrafts);
 
 function tagCount(slug: CollectionEntry<'tags'>['slug']) {
-	return posts.filter((post) => post.data.tags.some((tag) => tag.slug === slug)).length;
+	return posts.filter((post) => !post.data.draft).filter((post) => post.data.tags.some((tag) => tag.slug === slug))
+		.length;
 }
 
 function isSamePath(path: string) {
@@ -87,6 +90,7 @@ const isPostPage = Astro.url.pathname.startsWith('/posts');
 		</div>
 		<div>
 			<ul>
+				{!page.data.length && 'No posts found.'}
 				{
 					page.data.map(({ slug, data: { date, title, summary, tags } }: CollectionEntry<'posts'>) => (
 						<li class='py-5'>
