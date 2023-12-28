@@ -1,6 +1,6 @@
 ---
 name: Erdélyi Roland
-avatar: '/images/avatar.jpg'
+avatar: '/src/assets/authors/erdelyi-roland/avatar.jpg'
 occupation: 'Software engineer'
 website: 'https://erdelyiroland.com'
 email: 'mail@erdelyiroland.com'
