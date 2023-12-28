@@ -5,7 +5,12 @@ const authors = defineCollection({
 	schema: z.object({
 		name: z.string(),
 		avatar: z.string(),
+		occupation: z.string(),
+		website: z.string().url(),
+		email: z.string().email(),
 		github: z.string().url(),
+		linkedin: z.string().url(),
+		twitter: z.string().url(),
 	}),
 });
 
