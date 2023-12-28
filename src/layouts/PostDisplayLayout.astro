@@ -1,0 +1,128 @@
+---
+import { Image } from 'astro:assets';
+import { getEntries, getEntry, type CollectionEntry } from 'astro:content';
+
+import RootLayout from './RootLayout.astro';
+
+import Date from '../components/Date.astro';
+import PostTag from '../components/PostTag.astro';
+import RootContainer from '../components/RootContainer.astro';
+
+interface Props {
+	post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+
+const author: CollectionEntry<'authors'> = await getEntry(post.data.author);
+const tags: CollectionEntry<'tags'>[] = await getEntries(post.data.tags);
+const related: CollectionEntry<'posts'>[] = await getEntries(post.data.related);
+
+const { Content } = await post.render();
+---
+
+<RootLayout
+	title={post.data.title}
+	description={post.data.summary}>
+	<RootContainer>
+		<article>
+			<div class='xl:divide-y xl:divide-200 xl:dark:divide-700'>
+				<header class='pt-6 xl:pb-6'>
+					<div class='space-y-1 text-center'>
+						<dl class='space-y-10'>
+							<div>
+								<dt class='sr-only'>Published on</dt>
+								<dd class='text-base font-medium leading-6 text-500 dark:text-400'>
+									<Date date={post.data.date} />
+								</dd>
+							</div>
+						</dl>
+						<h1
+							class='text-3xl font-extrabold leading-9 tracking-tight text-900 dark:text-100 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14'>
+							{post.data.title}
+						</h1>
+					</div>
+				</header>
+				<div
+					class='grid-rows-[auto_1fr] divide-y divide-200 pb-8 dark:divide-700 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0'>
+					<dl class='pb-10 pt-6 xl:border-b xl:border-200 xl:pt-11 xl:dark:border-700'>
+						<dt class='sr-only'>Author</dt>
+						<dd class='flex items-center justify-center xl:justify-normal space-x-2'>
+							{
+								author.data.avatar && (
+									<Image
+										src={author.data.avatar}
+										width={38}
+										height={38}
+										alt='avatar'
+										class='h-10 w-10 rounded-full'
+									/>
+								)
+							}
+							<dl class='whitespace-nowrap text-sm font-medium leading-5'>
+								<dt class='sr-only'>Name</dt>
+								<dd class='text-900 dark:text-100'>{author.data.name}</dd>
+								<dt class='sr-only'>Github</dt>
+								<dd>
+									<a
+										href={author.data.github}
+										target='_blank'
+										class='text-accent-500 hover:text-accent-600 dark:hover:text-accent-400'>
+										{author.data.github.replace('https://github.com/', '@')}
+									</a>
+								</dd>
+							</dl>
+						</dd>
+					</dl>
+					<div class='divide-y divide-200 dark:divide-700 xl:col-span-3 xl:row-span-2 xl:pb-0'>
+						<div class='prose max-w-none pb-8 pt-10 dark:prose-invert'>
+							<slot />
+							<Content />
+						</div>
+					</div>
+					<footer>
+						<div
+							class='divide-200 text-sm font-medium leading-5 dark:divide-700 xl:col-start-1 xl:row-start-2 xl:divide-y'>
+							{
+								tags && (
+									<div class='py-4 xl:py-8'>
+										<h2 class='text-xs uppercase tracking-wide text-500 dark:text-400'>Tags</h2>
+										<div class='flex flex-wrap'>
+											{tags.map((tag) => (
+												<PostTag tag={tag} />
+											))}
+										</div>
+									</div>
+								)
+							}
+							{
+								related.length > 0 && (
+									<div class='py-4 xl:pb-8'>
+										<h2 class='text-xs uppercase tracking-wide text-500 dark:text-400'>
+											Related Articles
+										</h2>
+										<ul class='flex flex-wrap gap-2 xl:space-x-0 xl:space-y-0'>
+											{related.map((post) => (
+												<li class='text-accent-500 hover:text-accent-600 dark:hover:text-accent-400'>
+													<a href={`/posts/${post.slug}`}>{post.data.title}</a>
+												</li>
+											))}
+										</ul>
+									</div>
+								)
+							}
+						</div>
+						<div class='pt-4 xl:pt-8'>
+							<a
+								href='/posts'
+								class='text-accent-500 hover:text-accent-600 dark:hover:text-accent-400'
+								aria-label='Back to the posts'>
+								&larr; Back to the posts
+							</a>
+						</div>
+					</footer>
+				</div>
+			</div>
+		</article>
+	</RootContainer>
+</RootLayout>
