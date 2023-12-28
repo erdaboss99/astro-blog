@@ -1,0 +1,12 @@
+---
+import { getEntry } from 'astro:content';
+
+import AuthorLayout from '../layouts/AuthorLayout.astro';
+
+const author = await getEntry('authors', 'erdelyi-roland');
+const { Content } = await author.render();
+---
+
+<AuthorLayout author={author}>
+	<Content />
+</AuthorLayout>
