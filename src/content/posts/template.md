@@ -6,4 +6,4 @@ summary: 'This is a test post'
 related: []
 ---
 
-This is a test post with some content.
+This a template post
